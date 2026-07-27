@@ -35,6 +35,14 @@ and payment processing.
    immediately via Manage Users, or create a fresh admin and delete this
    one, since this default is documented here in a public repo.
 
+## Look & feel
+
+The Login screen uses a purple brand theme (`view/UiTheme.java`) and a
+logo drawn at runtime with `Graphics2D` (`view/GymLogoPanel.java`) rather
+than a bundled image asset, so there's no external file to manage. The
+same palette/fonts can be reused on other dashboards later by calling
+into `UiTheme` from those screens.
+
 ## Running the unit tests
 
 Open any file under `test/` in IntelliJ and run it - IntelliJ will offer
@@ -57,7 +65,8 @@ src/
   security/     PasswordUtil (PBKDF2 password hashing)
   database/     one DAO per table + DatabaseConnection + DbInitializer
   controller/   business logic / validation, one per use case area
-  view/         Swing UI (LoginFrame, role-based dashboards, feature dialogs)
+  view/         Swing UI (LoginFrame, role-based dashboards, feature dialogs,
+                UiTheme + GymLogoPanel for the purple-branded login screen)
 test/           JUnit 5 unit tests, mirroring the src package layout
 db/schema.sql   MySQL schema (see also the ERD in the SRS, Figure 5)
 docs/           class diagram, statechart diagrams, structure/algorithm write-up, acceptance test plan

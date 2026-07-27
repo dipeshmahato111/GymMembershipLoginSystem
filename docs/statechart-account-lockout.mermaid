@@ -1,0 +1,18 @@
+stateDiagram-v2
+    [*] --> Unlocked
+
+    Unlocked --> Unlocked: failed login (1-4 attempts)\nfailed_attempts++
+    Unlocked --> Locked: 5th consecutive failed login\nlocked_until = now + 15 min
+
+    Locked --> Locked: login attempted before\nlocked_until elapses (denied)
+    Locked --> Unlocked: successful login after\nlocked_until elapses\n(failed_attempts reset to 0)
+
+    Unlocked --> Unlocked: successful login\n(failed_attempts reset to 0)
+
+    note right of Locked
+        Implements SRS 4.2 Robustness:
+        "lock out any user account for
+        15 minutes after 5 consecutive
+        failed login attempts"
+        (AuthenticationController.login)
+    end note

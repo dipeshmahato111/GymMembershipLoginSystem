@@ -1,0 +1,173 @@
+classDiagram
+    direction TB
+
+    class User {
+        <<abstract>>
+        -int userId
+        -String username
+        -String fullName
+        -String email
+        -String phone
+        -Role role
+        -String status
+        -LocalDate joinDate
+        +isActive() boolean
+    }
+
+    class Member
+    class Trainer {
+        -Integer trainerId
+        -String specialization
+    }
+    class Receptionist {
+        -String shift
+    }
+    class Administrator {
+        -String adminLevel
+    }
+
+    User <|-- Member
+    User <|-- Trainer
+    User <|-- Receptionist
+    User <|-- Administrator
+
+    class Membership {
+        -int membershipId
+        -int memberId
+        -String tierName
+        -double price
+        -LocalDate startDate
+        -LocalDate endDate
+        -String status
+        +isActive() boolean
+    }
+
+    class MembershipTier {
+        -int tierId
+        -String tierName
+        -double price
+        -int durationMonths
+    }
+
+    class Attendance {
+        -int attendanceId
+        -int memberId
+        -LocalDateTime checkInTime
+        -LocalDateTime checkOutTime
+    }
+
+    class Booking {
+        -int bookingId
+        -int memberId
+        -int classId
+        -LocalDateTime bookingDate
+        -String status
+    }
+
+    class Payment {
+        -int paymentId
+        -int membershipId
+        -double amount
+        -LocalDateTime paymentDate
+        -String paymentMethod
+        -String status
+    }
+
+    class FitnessClass {
+        -int classId
+        -int trainerId
+        -String className
+        -LocalDateTime scheduleTime
+        -int maxCapacity
+        +getSeatsAvailable() int
+    }
+
+    Member "1" --> "1..*" Membership : owns
+    Member "1" --> "0..*" Attendance : has
+    Member "1" --> "0..*" Booking : creates
+    Membership "1" --> "0..*" Payment : generates
+    Trainer "1" --> "0..*" FitnessClass : teaches
+    FitnessClass "1" --> "0..*" Booking : books
+
+    class AuthenticationController {
+        +login(username, password) AuthResult
+        +verifyCredentials(username, password) boolean
+        +resetPassword(username, newPassword) Result
+        +generateSessionToken() String
+    }
+
+    class MembershipController {
+        +registerMember(...) Result
+        +renewMembership(membershipId, months) Result
+        +suspendMembership(membershipId) Result
+        +saveTier(tier) Result
+    }
+
+    class AttendanceController {
+        +checkIn(usernameOrId) Result
+        +checkOut(memberId) Result
+    }
+
+    class BookingController {
+        +bookClass(memberId, classId) Result
+    }
+
+    class ClassController {
+        +addClass(trainerId, name, time, capacity) Result
+        +rosterForClass(classId) List~Booking~
+    }
+
+    class PaymentController {
+        +processPayment(membershipId, method) Result
+        +generateReceipt(paymentId) String
+    }
+
+    class PaymentGatewaySimulator {
+        +authorize(amount, method) boolean
+    }
+
+    class UserManagementController {
+        +createStaff(...) Result
+        +suspend(userId) Result
+        +activate(userId) Result
+    }
+
+    class ReportController {
+        +summaryReport() String
+    }
+
+    class PasswordUtil {
+        <<utility>>
+        +hash(password) String
+        +verify(password, storedHash) boolean
+    }
+
+    AuthenticationController ..> User : authenticates
+    AuthenticationController ..> PasswordUtil : uses
+    MembershipController ..> PasswordUtil : uses
+    PaymentController ..> PaymentGatewaySimulator : uses
+    MembershipController --> Membership
+    AttendanceController --> Attendance
+    BookingController --> Booking
+    PaymentController --> Payment
+    ClassController --> FitnessClass
+
+    class UserDAO
+    class MembershipDAO
+    class AttendanceDAO
+    class BookingDAO
+    class PaymentDAO
+    class TrainerDAO
+    class FitnessClassDAO
+    class MembershipTierDAO
+    class DatabaseConnection
+
+    AuthenticationController --> UserDAO
+    MembershipController --> MembershipDAO
+    MembershipController --> MembershipTierDAO
+    AttendanceController --> AttendanceDAO
+    BookingController --> BookingDAO
+    PaymentController --> PaymentDAO
+    ClassController --> FitnessClassDAO
+    UserDAO --> DatabaseConnection
+    MembershipDAO --> DatabaseConnection

@@ -1,0 +1,6 @@
+# Copy this file to "db.properties" (same folder) and fill in your own
+# local MySQL credentials. db.properties is gitignored on purpose so real
+# credentials are never committed to source control.
+db.url=jdbc:mysql://localhost:3306/gym_management
+db.user=root
+db.password=CHANGE_ME

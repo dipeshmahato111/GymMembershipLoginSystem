@@ -1,0 +1,17 @@
+stateDiagram-v2
+    [*] --> CheckedOut
+
+    CheckedOut --> CheckedIn: checkIn()\nrequires active membership\n(AttendanceController)
+    CheckedIn --> CheckedOut: checkOut()
+
+    CheckedIn --> CheckedIn: checkIn() attempted again\n(rejected - "already checked in")
+
+    note right of CheckedIn
+        attendance.check_in_time set,
+        check_out_time NULL
+    end note
+
+    note right of CheckedOut
+        Most recent attendance row
+        (if any) has check_out_time set
+    end note

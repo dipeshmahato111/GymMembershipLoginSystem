@@ -1,0 +1,28 @@
+stateDiagram-v2
+    [*] --> Active: registerMember()\n(MembershipController)
+
+    Active --> Expired: end_date passes\n(evaluated by isActive())
+    Active --> Suspended: suspendMembership()\n(Admin/Receptionist action)
+
+    Expired --> Active: renewMembership()\nor processPayment() succeeds
+    Suspended --> Active: renewMembership()
+
+    Expired --> [*]: member never renews
+    Suspended --> [*]: member never renews
+
+    note right of Active
+        Grants gym access (checkIn),
+        grants class booking (bookClass)
+    end note
+
+    note right of Expired
+        Check-in denied (SRS 3.2.3
+        alternate flow: "Membership
+        has expired")
+    end note
+
+    note right of Suspended
+        Check-in and booking denied.
+        Set by staff via
+        MembershipController.suspendMembership()
+    end note

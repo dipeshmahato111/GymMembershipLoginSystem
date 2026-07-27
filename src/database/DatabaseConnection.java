@@ -37,11 +37,10 @@ public class DatabaseConnection {
     private DatabaseConnection() {
     }
 
-    private static final String[] CANDIDATE_PATHS = {"/db.properties", "/resources/db.properties"};
-
     private static Properties loadProperties() {
         Properties props = new Properties();
-        for (String path : CANDIDATE_PATHS) {
+        String[] candidatePaths = {"/db.properties", "/resources/db.properties"};
+        for (String path : candidatePaths) {
             try (InputStream in = DatabaseConnection.class.getResourceAsStream(path)) {
                 if (in != null) {
                     props.load(in);

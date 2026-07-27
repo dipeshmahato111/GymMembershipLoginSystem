@@ -67,6 +67,7 @@ public class AuthenticationController {
             currentSessionToken = generateSessionToken();
             return new AuthResult(true, "Login successful.", user);
         } catch (SQLException e) {
+            e.printStackTrace();
             return new AuthResult(false, "Database unavailable. Please try again later.", null);
         }
     }

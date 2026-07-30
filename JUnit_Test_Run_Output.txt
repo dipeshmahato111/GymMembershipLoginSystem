@@ -1,0 +1,70 @@
+
+Thanks for using JUnit! Support its development at https://junit.org/sponsoring
+
+?
+?? JUnit Platform Suite ?
+?? JUnit Jupiter ?
+?  ?? MemberTest ?
+?  ?  ?? newMemberDefaultsToActiveStatus() ?
+?  ?  ?? statusCanBeTransitionedToSuspended() ?
+?  ?  ?? fullNameConcatenatesFirstAndLastName() ?
+?  ?? MembershipTest ?
+?  ?  ?? isActiveReturnsTrueWhenStatusActiveAndEndDateInFuture() ?
+?  ?  ?? isActiveReturnsFalseWhenEndDateHasPassed() ?
+?  ?  ?? isActiveReturnsTrueWhenEndDateIsExactlyToday() ?
+?  ?  ?? isActiveReturnsFalseForCancelledMembership() ?
+?  ?  ?? newMembershipDefaultsToActiveStatus() ?
+?  ?  ?? isActiveReturnsFalseWhenStatusIsSuspendedEvenIfEndDateInFuture() ?
+?  ?? InputValidatorTest ?
+?  ?  ?? isValidPhoneRejectsInvalidFormats(String) ?
+?  ?  ?  ?? [1] abc ?
+?  ?  ?  ?? [2] 12 ?
+?  ?  ?  ?? [3]  ?
+?  ?  ?? isNonEmptyRejectsNullAndWhitespace() ?
+?  ?  ?? isValidPhoneAcceptsCommonFormats(String) ?
+?  ?  ?  ?? [1] 555-123-4567 ?
+?  ?  ?  ?? [2] (555) 123 4567 ?
+?  ?  ?  ?? [3] +1 555 123 4567 ?
+?  ?  ?? isValidEmailRejectsMalformedAddresses(String) ?
+?  ?  ?  ?? [1] not-an-email ?
+?  ?  ?  ?? [2] missing-at.com ?
+?  ?  ?  ?? [3] @no-local.com ?
+?  ?  ?  ?? [4] spaces in@email.com ?
+?  ?  ?  ?? [5]  ?
+?  ?  ?? isValidEmailRejectsNull() ?
+?  ?  ?? isValidEmailAcceptsWellFormedAddresses(String) ?
+?  ?  ?  ?? [1] jane@example.com ?
+?  ?  ?  ?? [2] a.b+c@sub.domain.org ?
+?  ?  ?  ?? [3] x@y.co ?
+?  ?  ?? isPositiveEvaluatesCorrectly(double, boolean) ?
+?  ?     ?? [1] 1.0, true ?
+?  ?     ?? [2] 0.0, false ?
+?  ?     ?? [3] -5.0, false ?
+?  ?     ?? [4] 49.99, true ?
+?  ?? FitnessClassTest ?
+?  ?  ?? hasAvailableSeatsIsFalseWhenOverCapacity() ?
+?  ?  ?? hasAvailableSeatsIsTrueWhenPartiallyBooked() ?
+?  ?  ?? hasAvailableSeatsIsTrueWhenNoBookings() ?
+?  ?  ?? hasAvailableSeatsIsFalseWhenAtCapacity() ?
+?  ?? PasswordUtilTest ?
+?     ?? verifyReturnsFalseForMalformedStoredHash() ?
+?     ?? twoHashesOfSamePasswordDifferDueToRandomSalt() ?
+?     ?? hashDoesNotStorePlaintextPassword() ?
+?     ?? verifyReturnsTrueForCorrectPassword() ?
+?     ?? verifyReturnsFalseForIncorrectPassword() ?
+?? JUnit Vintage ?
+
+Test run finished after 463 ms
+[        13 containers found      ]
+[         0 containers skipped    ]
+[        13 containers started    ]
+[         0 containers aborted    ]
+[        13 containers successful ]
+[         0 containers failed     ]
+[        38 tests found           ]
+[         0 tests skipped         ]
+[        38 tests started         ]
+[         0 tests aborted         ]
+[        38 tests successful      ]
+[         0 tests failed          ]
+

@@ -80,3 +80,4 @@ membership activity rule, booking capacity check, payment processing).
 | Unit test cases (JUnit) | `test/` |
 | Presentation slides | not included - build separately from the above |
 | Prompts.md | The prompts used with Claude to build this project. |
+| JUnit_Test_Run_Output.txt | Console log of the last full test run — 38/38 tests passing. |

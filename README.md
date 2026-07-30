@@ -79,3 +79,4 @@ membership activity rule, booking capacity check, payment processing).
 | API docs (javadoc) | generate locally with the command above |
 | Unit test cases (JUnit) | `test/` |
 | Presentation slides | not included - build separately from the above |
+| Prompts.md | The prompts used with Claude to build this project. |

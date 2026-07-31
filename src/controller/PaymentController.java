@@ -1,8 +1,10 @@
 package controller;
 
 import database.MembershipDAO;
+import database.MembershipTierDAO;
 import database.PaymentDAO;
 import model.Membership;
+import model.MembershipTier;
 import model.Payment;
 
 import java.sql.SQLException;
@@ -16,6 +18,7 @@ public class PaymentController {
 
     private final PaymentDAO paymentDAO = new PaymentDAO();
     private final MembershipDAO membershipDAO = new MembershipDAO();
+    private final MembershipTierDAO tierDAO = new MembershipTierDAO();
     private final PaymentGatewaySimulator gateway = new PaymentGatewaySimulator();
 
     /**
@@ -42,7 +45,11 @@ public class PaymentController {
 
             LocalDate base = membership.getEndDate().isBefore(LocalDate.now())
                     ? LocalDate.now() : membership.getEndDate();
-            membership.setEndDate(base.plusMonths(1));
+            // Extend by the full billing cycle of the membership's tier
+            // (e.g. 12 months for Annual/VIP), not a hardcoded single month.
+            MembershipTier tier = tierDAO.findByName(membership.getTierName());
+            int months = tier != null ? tier.getDurationMonths() : 1;
+            membership.setEndDate(base.plusMonths(months));
             membership.setStatus("ACTIVE");
             membershipDAO.update(membership);
 

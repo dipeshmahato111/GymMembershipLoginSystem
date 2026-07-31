@@ -55,6 +55,29 @@ public class AttendanceController {
         }
     }
 
+    /**
+     * Checks a member out by username or numeric member id. Mirrors
+     * {@link #checkIn(String)} so the front desk can use the same
+     * identifier for both ends of a visit.
+     */
+    public Result checkOut(String usernameOrId) {
+        if (usernameOrId == null || usernameOrId.isBlank()) {
+            return Result.fail("Enter a username or member ID to check out.");
+        }
+        try {
+            User user = resolveMember(usernameOrId.trim());
+            if (user == null) {
+                return Result.fail("No matching member found.");
+            }
+            if (user.getRole() != Role.MEMBER) {
+                return Result.fail("Only members can check out.");
+            }
+            return checkOut(user.getUserId());
+        } catch (SQLException e) {
+            return Result.fail("Check-out failed - database unavailable. " + e.getMessage());
+        }
+    }
+
     public Result checkOut(int memberId) {
         try {
             Attendance open = attendanceDAO.findOpenByMember(memberId);

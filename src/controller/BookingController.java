@@ -34,6 +34,15 @@ public class BookingController {
             if (fc.getCurrentBookings() >= fc.getMaxCapacity()) {
                 return Result.fail("This class is already full.");
             }
+            // A member who previously cancelled still has a row because of the
+            // UNIQUE (member_id, class_id) constraint - re-activate it instead
+            // of inserting, which would violate the constraint.
+            Booking existing = bookingDAO.findByMemberAndClass(memberId, classId);
+            if (existing != null) {
+                bookingDAO.reconfirm(existing.getBookingId(), LocalDateTime.now());
+                return Result.ok("Class booked: " + fc.getClassName() + " on " + fc.getScheduleTime()
+                        + ".", existing.getBookingId());
+            }
             Booking booking = new Booking(0, memberId, classId, LocalDateTime.now(), "CONFIRMED");
             int id = bookingDAO.insert(booking);
             return Result.ok("Class booked: " + fc.getClassName() + " on " + fc.getScheduleTime() + ".", id);

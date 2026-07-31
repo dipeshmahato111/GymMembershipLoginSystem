@@ -20,6 +20,7 @@ public class MemberDashboard extends DashboardFrame {
         addFeatureButton("My Membership", () -> new MyMembershipDialog(this, user).setVisible(true));
         addFeatureButton("Fitness Classes", () -> new FitnessClassesDialog(this, user).setVisible(true));
         addFeatureButton("Check In", this::selfCheckIn);
+        addFeatureButton("Check Out", this::selfCheckOut);
         addFeatureButton("Check-In History", () -> new CheckInHistoryDialog(this, user).setVisible(true));
 
         finishLayout();
@@ -29,6 +30,13 @@ public class MemberDashboard extends DashboardFrame {
         Result result = attendanceController.checkIn(String.valueOf(currentUser.getUserId()));
         JOptionPane.showMessageDialog(this, result.getMessage(),
                 result.isSuccess() ? "Check-In" : "Check-In Failed",
+                result.isSuccess() ? JOptionPane.INFORMATION_MESSAGE : JOptionPane.ERROR_MESSAGE);
+    }
+
+    private void selfCheckOut() {
+        Result result = attendanceController.checkOut(String.valueOf(currentUser.getUserId()));
+        JOptionPane.showMessageDialog(this, result.getMessage(),
+                result.isSuccess() ? "Check-Out" : "Check-Out Failed",
                 result.isSuccess() ? JOptionPane.INFORMATION_MESSAGE : JOptionPane.ERROR_MESSAGE);
     }
 }

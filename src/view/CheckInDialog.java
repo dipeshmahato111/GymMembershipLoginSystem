@@ -30,9 +30,11 @@ public class CheckInDialog extends JDialog {
         JPanel top = new JPanel();
         txtMemberId = new JTextField(16);
         JButton btnCheckIn = new JButton("Check In");
+        JButton btnCheckOut = new JButton("Check Out");
         top.add(new JLabel("Username or Member ID:"));
         top.add(txtMemberId);
         top.add(btnCheckIn);
+        top.add(btnCheckOut);
         add(top, BorderLayout.NORTH);
 
         tableModel = new DefaultTableModel(new Object[]{"Attendance ID", "Member ID", "Check-in", "Check-out"}, 0) {
@@ -49,6 +51,7 @@ public class CheckInDialog extends JDialog {
         add(bottom, BorderLayout.SOUTH);
 
         btnCheckIn.addActionListener(e -> doCheckIn());
+        btnCheckOut.addActionListener(e -> doCheckOut());
         txtMemberId.addActionListener(e -> doCheckIn());
         btnClose.addActionListener(e -> dispose());
 
@@ -59,6 +62,17 @@ public class CheckInDialog extends JDialog {
         Result result = attendanceController.checkIn(txtMemberId.getText());
         JOptionPane.showMessageDialog(this, result.getMessage(),
                 result.isSuccess() ? "Check-In" : "Check-In Failed",
+                result.isSuccess() ? JOptionPane.INFORMATION_MESSAGE : JOptionPane.ERROR_MESSAGE);
+        if (result.isSuccess()) {
+            txtMemberId.setText("");
+        }
+        refreshToday();
+    }
+
+    private void doCheckOut() {
+        Result result = attendanceController.checkOut(txtMemberId.getText());
+        JOptionPane.showMessageDialog(this, result.getMessage(),
+                result.isSuccess() ? "Check-Out" : "Check-Out Failed",
                 result.isSuccess() ? JOptionPane.INFORMATION_MESSAGE : JOptionPane.ERROR_MESSAGE);
         if (result.isSuccess()) {
             txtMemberId.setText("");
